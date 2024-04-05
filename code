@@ -1,0 +1,122 @@
+from turtle import *
+
+"""
+Functions
+"""
+import random
+
+
+"""
+Screen
+"""
+screen = Screen()
+screen.bgcolor("black")
+screen.tracer(3)
+
+tom = Turtle()
+tom.color("red")
+
+
+def random_color():
+  color = "#"
+  digits = "0123456789ABCDEF"
+  for i in range(6):
+    color += digits[random.randint(0,15)]
+  return color
+
+def draw_playing_area(tom):
+  tom.hideturtle()
+  tom.penup()
+  tom.forward(150)
+  tom.pendown()
+  tom.begin_fill()
+  tom.right(90)
+  tom.forward(150)
+  tom.right(90)
+  tom.forward(300)
+  tom.right(90)
+  tom.forward(300)
+  tom.right(90)
+  tom.forward(300)
+  tom.right(90)
+  tom.forward(300)
+  tom.end_fill()
+  tom.penup()
+  tom.right(90)
+  tom.forward(150)
+  tom.right(90)
+  tom.forward(150)
+  tom.color('red')
+  tom.showturtle()
+  tom.pendown()
+  
+def move_with_heading(tom):
+  if tom.xcor()>150 or tom.xcor()<-150:
+    tom.setheading(180-tom.heading())
+  if tom.ycor()>150 or tom.ycor()<-150:
+    tom.setheading(-tom.heading())
+  tom.forward(1)
+
+def right(ted):
+  if ted.xcor()<140:
+    ted.setheading(0)
+    ted.forward(10)
+
+
+def up(ted):
+  if ted.ycor()<140:
+    ted.setheading(90)
+    ted.forward(10)
+
+def down(ted):
+  if ted.ycor()>-140:
+    ted.setheading(-90)
+    ted.forward(10)
+
+def left(ted):
+  if ted.xcor()>-140:
+    ted.setheading(180)
+    ted.forward(10)
+    
+
+
+
+rise = 0
+run = 0
+
+
+draw_playing_area(tom)
+
+
+
+
+
+turtles = []
+
+for tom in range(10):
+  turtles.append(Turtle())
+for tom in turtles:
+  tom.color(random_color())
+  tom.shape("circle")
+  tom.setheading(random.randint(0,360))
+  tom.penup()
+  tom.forward(25)
+
+
+ted = Turtle()
+ted.shape("turtle")
+ted.penup()
+screen.listen()
+screen.onkey(lambda: up(ted), "Up")
+screen.onkey(lambda: down(ted), "Down")
+screen.onkey(lambda: left(ted), "Left")
+screen.onkey(lambda: right(ted), "Right")
+screen.listen()
+
+
+while True:
+ for tom in turtles:
+   move_with_heading(tom)
+   if ted.distance(tom)<20:
+     tom.hideturtle()
+     turtles.remove(tom)
